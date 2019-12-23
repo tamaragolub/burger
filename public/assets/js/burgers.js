@@ -21,5 +21,24 @@ console.log("Hi");
         )
     })
 
+    $(".delete-btn").on("click", function(event){
+        event.preventDefault();
+
+        var burgerID = $(this).attr("data-id");
+
+        console.log(burgerID);
+
+        $.ajax("/api/burgers", {
+            type: "PUT",
+            data: {burgerID}
+        }).then(
+            function() {
+                console.log("ate the burger");
+                location.reload();
+            }
+        )
+
+    })
+
 
 })

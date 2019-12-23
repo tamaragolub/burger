@@ -22,29 +22,38 @@ connection.connect(function(err) {
   console.log("connected as id " + connection.threadId);
 });
 
-
 router.get("/", function(req, res) {
-    burgers: data
-    res.render("index");
-})
+  connection.query(
+    "SELECT * FROM burgers",
+
+    function(err, results) {
+      res.render("index", { burgers: results });
+    }
+  );
+});
 
 router.post("/api/burgers", function(req, res) {
-    
-    connection.query(
-        "INSERT INTO burgers SET ?",
-        req.body,
+  connection.query(
+    "INSERT INTO burgers SET ?",
+    req.body,
 
-        function(err) {
-            if(err) return res.json({success: false, error:err})
-          console.log("The burger has been added successfully!");
-          res.json({success: true});
-        }
-      );
+    function(err) {
+      if (err) return res.json({ success: false, error: err });
+      console.log("The burger has been added successfully!");
+      res.json({ success: true });
+    }
+  );
+});
 
-
-    
+router.put("/api/burgers", function(req, res) {
+  connection.query(
+    "UPDATE burgers SET ? WHERE ?",
+     [{ devoured: 1 }, { id: req.body.burgerID }],
+     function(err) {
+      if (err) return res.json({ success: false, error: err });
+      console.log("The burger has been eaten!");
+      res.json({ success: true });
+  })
 })
-
-
 
 module.exports = router;

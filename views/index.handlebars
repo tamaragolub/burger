@@ -5,12 +5,25 @@
     <button class="submit-btn">Submit</button>
 </div>
 
+<div style="background-color: lightsalmon;">
+<h2>Burgers Bought</h2>
+{{#each burgers}}
+    {{#unless devoured}}
 <div>
-    <p>Name of Burger</p>
-    <button>Devour</button>
+    <p>{{burger_name}}</p>
+    <button class="delete-btn" data-id="{{this.id}}">Devour</button>
+</div>
+    {{/unless}}
+{{/each}}
 </div>
 
+<div style="background-color:lightgreen;">
+<h2>Devoured Burger</h2>
+{{#each burgers}}
+    {{#if devoured}}
 <div>
-    <p>Devoured Burger</p>
+    <p>{{burger_name}}</p>
 </div>
-
+    {{/if}}
+{{/each}}
+</div>
